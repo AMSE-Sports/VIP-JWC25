@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Hotel Complimentary Ticket Registration • WGP#1</title>
+  <title>VIP Registration • WGP#1</title>
 
   <!-- Supabase JS Client -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.48.0/dist/umd/supabase.js"></script>
@@ -126,8 +126,8 @@
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      padding:16px 22px;
-      border-radius:16px;
+      padding:14px 20px;
+      border-radius:14px;
       border:none;
       cursor:pointer;
       font-weight:800;
@@ -145,6 +145,14 @@
       opacity:.6;
       cursor:default;
       box-shadow:none;
+    }
+
+    .btn-secondary {
+      background:#fff;
+      color:#111827;
+      border:1px solid #d1d5db;
+      box-shadow:0 4px 14px rgba(15,23,42,0.06);
+      gap:8px;
     }
 
     .footer {
@@ -208,186 +216,149 @@
         line-height:1.6;
       }
     }
+
+    .section-title {
+      font-weight:800;
+      font-size:var(--font-label);
+      margin:6px 0 4px;
+      padding:6px 10px;
+      border-radius:10px;
+      background:#fff7f1;
+      border:1px solid #fed7aa;
+      color:#b45309;
+    }
+
+    .follower-block {
+      padding:12px 14px;
+      border-radius:12px;
+      border:1px solid #e5e7eb;
+      background:#f9fafb;
+      margin-bottom:10px;
+    }
+
+    .follower-title {
+      font-weight:700;
+      font-size:var(--font-note);
+      margin-bottom:8px;
+      color:#374151;
+    }
   </style>
 </head>
 <body>
   <!-- HEADER IMAGE -->
   <div class="header">
-    <!-- วางไฟล์ชื่อ Header.png ไว้โฟลเดอร์เดียวกับไฟล์ HTML นี้ -->
     <img src="Header.png" alt="WGP#1 Waterjet World Cup 2025 Header">
   </div>
 
   <main class="container">
     <div class="card">
       <div class="head">
-        <h1>Hotel Complimentary Ticket Registration</h1>
-        <p>ลงทะเบียนเพื่อรับตั๋ว Complimentary Ticket • 1 ใบใช้เข้างานได้ 1 วัน</p>
+        <h1>VIP Registration</h1>
+        <p>ลงทะเบียนแขก VIP และผู้ติดตาม สำหรับเข้าร่วมงาน WGP#1 Waterjet World Cup 2025</p>
       </div>
 
-      <form class="body" id="hotel-form">
-        <!-- ชื่อ TH / EN -->
+      <form class="body" id="vip-form">
+        <!-- A. VIP MAIN GUEST -->
+        <div class="section-title">A. ข้อมูลแขก VIP</div>
+
         <div class="row two">
           <div>
-            <label class="title">ชื่อจริง (TH)<span class="en-label">/ First Name (TH)</span> *</label>
-            <input id="first_name_th" required>
+            <label class="title">ชื่อจริง<span class="en-label"> / First Name</span> *</label>
+            <input id="vip_first_name" required>
           </div>
           <div>
-            <label class="title">นามสกุล (TH)<span class="en-label">/ Last Name (TH)</span> *</label>
-            <input id="last_name_th" required>
+            <label class="title">นามสกุล<span class="en-label"> / Last Name</span> *</label>
+            <input id="vip_last_name" required>
           </div>
         </div>
 
         <div class="row two">
           <div>
-            <label class="title">First Name (EN) *</label>
-            <input id="first_name_en" required>
+            <label class="title">ตำแหน่ง<span class="en-label"> / Position</span> *</label>
+            <input id="vip_position" required placeholder="เช่น CEO, Director, President">
           </div>
           <div>
-            <label class="title">Last Name (EN) *</label>
-            <input id="last_name_en" required>
+            <label class="title">หน่วยงาน / องค์กร<span class="en-label"> / Organization</span> *</label>
+            <input id="vip_organization" required placeholder="เช่น Sports Authority of Thailand">
           </div>
         </div>
 
-        <!-- เบอร์ / โรงแรม -->
-        <div class="row two">
-          <div>
-            <label class="title">เบอร์ติดต่อ *</label>
-            <input id="phone" type="tel" required placeholder="เช่น 0812345678">
-          </div>
-          <div>
-            <label class="title">โรงแรมที่คุณเข้าพัก *</label>
-            <input id="hotel_name" required placeholder="เช่น Royal Cliff Beach Hotel">
-          </div>
-        </div>
-
-        <!-- Country / Province -->
-        <div class="row two">
-          <div>
-            <label class="title">ประเทศที่อาศัย *</label>
-            <select id="country" required>
-              <option value="">— เลือกประเทศ / Select —</option>
-              <option value="Thailand">Thailand</option>
-              <option value="Australia">Australia</option>
-              <option value="China">China</option>
-              <option value="France">France</option>
-              <option value="Germany">Germany</option>
-              <option value="India">India</option>
-              <option value="Japan">Japan</option>
-              <option value="Korea">Korea</option>
-              <option value="Malaysia">Malaysia</option>
-              <option value="Singapore">Singapore</option>
-              <option value="United Kingdom">United Kingdom</option>
-              <option value="United States">United States</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-
-          <div id="province-wrapper" class="hidden">
-            <label class="title">จังหวัดที่อาศัย (สำหรับผู้พำนักในประเทศไทย)</label>
-            <select id="thai_province">
-              <option value="">— เลือกจังหวัด / Select Province —</option>
-              <option value="กรุงเทพมหานคร">กรุงเทพมหานคร</option>
-              <option value="กระบี่">กระบี่</option>
-              <option value="กาญจนบุรี">กาญจนบุรี</option>
-              <option value="กาฬสินธุ์">กาฬสินธุ์</option>
-              <option value="กำแพงเพชร">กำแพงเพชร</option>
-              <option value="ขอนแก่น">ขอนแก่น</option>
-              <option value="จันทบุรี">จันทบุรี</option>
-              <option value="ฉะเชิงเทรา">ฉะเชิงเทรา</option>
-              <option value="ชลบุรี">ชลบุรี</option>
-              <option value="ชัยนาท">ชัยนาท</option>
-              <option value="ชัยภูมิ">ชัยภูมิ</option>
-              <option value="ชุมพร">ชุมพร</option>
-              <option value="เชียงราย">เชียงราย</option>
-              <option value="เชียงใหม่">เชียงใหม่</option>
-              <option value="ตรัง">ตรัง</option>
-              <option value="ตราด">ตราด</option>
-              <option value="ตาก">ตาก</option>
-              <option value="นครนายก">นครนายก</option>
-              <option value="นครปฐม">นครปฐม</option>
-              <option value="นครพนม">นครพนม</option>
-              <option value="นครราชสีมา">นครราชสีมา</option>
-              <option value="นครศรีธรรมราช">นครศรีธรรมราช</option>
-              <option value="นครสวรรค์">นครสวรรค์</option>
-              <option value="นนทบุรี">นนทบุรี</option>
-              <option value="นราธิวาส">นราธิวาส</option>
-              <option value="น่าน">น่าน</option>
-              <option value="บึงกาฬ">บึงกาฬ</option>
-              <option value="บุรีรัมย์">บุรีรัมย์</option>
-              <option value="ปทุมธานี">ปทุมธานี</option>
-              <option value="ประจวบคีรีขันธ์">ประจวบคีรีขันธ์</option>
-              <option value="ปราจีนบุรี">ปราจีนบุรี</option>
-              <option value="ปัตตานี">ปัตตานี</option>
-              <option value="พระนครศรีอยุธยา">พระนครศรีอยุธยา</option>
-              <option value="พังงา">พังงา</option>
-              <option value="พัทลุง">พัทลุง</option>
-              <option value="พิจิตร">พิจิตร</option>
-              <option value="พิษณุโลก">พิษณุโลก</option>
-              <option value="เพชรบุรี">เพชรบุรี</option>
-              <option value="เพชรบูรณ์">เพชรบูรณ์</option>
-              <option value="แพร่">แพร่</option>
-              <option value="พะเยา">พะเยา</option>
-              <option value="ภูเก็ต">ภูเก็ต</option>
-              <option value="มหาสารคาม">มหาสารคาม</option>
-              <option value="มุกดาหาร">มุกดาหาร</option>
-              <option value="แม่ฮ่องสอน">แม่ฮ่องสอน</option>
-              <option value="ยโสธร">ยโสธร</option>
-              <option value="ยะลา">ยะลา</option>
-              <option value="ร้อยเอ็ด">ร้อยเอ็ด</option>
-              <option value="ระนอง">ระนอง</option>
-              <option value="ระยอง">ระยอง</option>
-              <option value="ราชบุรี">ราชบุรี</option>
-              <option value="ลพบุรี">ลพบุรี</option>
-              <option value="ลำปาง">ลำปาง</option>
-              <option value="ลำพูน">ลำพูน</option>
-              <option value="ศรีสะเกษ">ศรีสะเกษ</option>
-              <option value="สกลนคร">สกลนคร</option>
-              <option value="สงขลา">สงขลา</option>
-              <option value="สตูล">สตูล</option>
-              <option value="สมุทรปราการ">สมุทรปราการ</option>
-              <option value="สมุทรสงคราม">สมุทรสงคราม</option>
-              <option value="สมุทรสาคร">สมุทรสาคร</option>
-              <option value="สระแก้ว">สระแก้ว</option>
-              <option value="สระบุรี">สระบุรี</option>
-              <option value="สิงห์บุรี">สิงห์บุรี</option>
-              <option value="สุโขทัย">สุโขทัย</option>
-              <option value="สุพรรณบุรี">สุพรรณบุรี</option>
-              <option value="สุราษฎร์ธานี">สุราษฎร์ธานี</option>
-              <option value="สุรินทร์">สุรินทร์</option>
-              <option value="หนองคาย">หนองคาย</option>
-              <option value="หนองบัวลำภู">หนองบัวลำภู</option>
-              <option value="อ่างทอง">อ่างทอง</option>
-              <option value="อำนาจเจริญ">อำนาจเจริญ</option>
-              <option value="อุดรธานี">อุดรธานี</option>
-              <option value="อุตรดิตถ์">อุตรดิตถ์</option>
-              <option value="อุทัยธานี">อุทัยธานี</option>
-              <option value="อุบลราชธานี">อุบลราชธานี</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Consent -->
         <div class="row">
           <div>
-            <label class="title">ยินยอมให้เก็บข้อมูล (Consent) *</label>
+            <label class="title">เบอร์ติดต่อ (Mobile / WhatsApp) *</label>
+            <input id="vip_phone" type="tel" required placeholder="+66 ... / +...">
+          </div>
+        </div>
+
+        <!-- B. FOLLOWERS -->
+        <div class="section-title">B. ผู้ติดตาม (ถ้ามี)</div>
+
+        <div id="followers-wrapper">
+          <!-- ผู้ติดตามคนที่ 1 (เริ่มต้น) -->
+          <div class="follower-block">
+            <div class="follower-title">ผู้ติดตามคนที่ 1 / Accompanying Guest 1</div>
+            <div class="row two">
+              <div>
+                <label class="title">ชื่อ–นามสกุล<span class="en-label"> / Full Name</span></label>
+                <input class="follower-name">
+              </div>
+              <div>
+                <label class="title">ตำแหน่ง / ความสัมพันธ์<span class="en-label"> / Role / Relation</span></label>
+                <input class="follower-position" placeholder="เช่น Assistant, Staff, Spouse">
+              </div>
+            </div>
+            <div class="row">
+              <div>
+                <label class="title">เบอร์ติดต่อผู้ติดตาม<span class="en-label"> / Contact Phone</span></label>
+                <input class="follower-phone" type="tel" placeholder="+66 ... / +...">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button type="button" class="btn btn-secondary" id="add-follower-btn" style="margin-bottom:10px;">
+          + เพิ่มผู้ติดตาม • Add Accompanying Guest
+        </button>
+
+        <!-- C. CONSENT -->
+        <div class="section-title">C. Consent</div>
+
+        <div class="row">
+          <div>
+            <label class="title">การจัดเก็บข้อมูล และการใช้ภาพ/วิดีโอ</label>
             <div class="consent-box">
               <p class="note">
-                EN: I understand that this form is used to register for a complimentary ticket for the WGP#1 Waterjet
-                World Cup 2025. My information (name, contact, hotel, and country) may be used by the event organizer
-                and hotel partners for verification and internal reporting only. My data will not be sold or shared with
-                unrelated third parties.
+                TH: ข้าพเจ้าขอรับรองว่าข้อมูลที่ให้ไว้ในแบบฟอร์มนี้เป็นความจริง และยินยอมให้ผู้จัดงาน
+                WGP#1 Waterjet World Cup 2025 จัดเก็บและใช้ข้อมูลของข้าพเจ้าและผู้ติดตาม
+                เพื่อการบริหารจัดการงาน การจัดลำดับที่นั่ง พิธีการ การรักษาความปลอดภัย
+                และการติดต่อประสานงานที่เกี่ยวข้องกับการแข่งขันเท่านั้น
+                ข้อมูลจะไม่ถูกนำไปใช้ในวัตถุประสงค์อื่นโดยไม่ได้รับความยินยอมเพิ่มเติม
               </p>
               <p class="note">
-                TH: ข้าพเจ้าขอรับรองว่าข้อมูลที่ให้ไว้เป็นความจริง และยินยอมให้ผู้จัดงานและโรงแรมคู่ค้า
-                ใช้ข้อมูลนี้เพื่อการยืนยันสิทธิ์ตั๋วเข้างาน และการจัดทำรายงานภายในเท่านั้น
-                ข้อมูลจะไม่ถูกขายหรือเปิดเผยต่อบุคคลภายนอกที่ไม่เกี่ยวข้อง
+                นอกจากนี้ การเข้าร่วมงานซึ่งมีการถ่ายทอดสดและเผยแพร่สู่สาธารณะทั่วโลก
+                ถือเป็นการยินยอมให้ผู้จัดงานและพันธมิตร สามารถบันทึกภาพนิ่ง วิดีโอ และเสียงของท่าน
+                เพื่อนำไปใช้ในสื่อประชาสัมพันธ์ โฆษณา ถ่ายทอดสด คลิปไฮไลต์ และสื่ออื่น ๆ ที่เกี่ยวข้อง
+                โดยไม่ต้องขออนุญาตเป็นรายครั้ง หรือจ่ายค่าตอบแทนเพิ่มเติม
+              </p>
+              <p class="note">
+                EN: I confirm that the information provided in this form is accurate and complete, and I consent to the
+                organizers of the WGP#1 Waterjet World Cup 2025 collecting and using my personal data and that of my
+                accompanying guests solely for event management, seating and protocol arrangements, security,
+                and official communications related to the event. The data will not be used for other purposes
+                without further consent.
+              </p>
+              <p class="note">
+                By attending the event, I also grant the organizers and their partners the right to photograph, film,
+                and record my image and voice (and those of my accompanying guests) for broadcasting, promotions,
+                advertising, live streaming, highlight clips, and other related media, without the need for
+                additional permission or compensation.
               </p>
 
               <label class="consent-check">
                 <input type="checkbox" id="consent" required>
                 <span>
-                  ฉันได้อ่านและยินยอมให้เก็บและใช้ข้อมูลตามที่ระบุข้างต้น<br>
-                  I have read and consent to the data usage described above.
+                  ฉันได้อ่านและยินยอมตามเงื่อนไขการใช้ข้อมูลและการบันทึกภาพ/วิดีโอข้างต้น<br>
+                  I have read and consent to the personal data and media conditions above.
                 </span>
               </label>
             </div>
@@ -395,7 +366,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary" id="submit-btn">
-          ส่งข้อมูลลงทะเบียน • Submit Registration
+          ส่งข้อมูลลงทะเบียน • Submit VIP Registration
         </button>
 
         <div id="message" class="hidden"></div>
@@ -417,16 +388,14 @@
 
     async function submitToSupabase(payload) {
       const { error } = await sb
-        .from('hotel_complimentary_tickets')
+        // เปลี่ยนชื่อตารางให้ตรงกับที่คุณสร้างใน Supabase
+        .from('vip_ticket_registrations')
         .insert({
-          first_name_th: payload.first_name_th,
-          last_name_th: payload.last_name_th,
-          first_name_en: payload.first_name_en,
-          last_name_en: payload.last_name_en,
-          phone: payload.phone,
-          hotel_name: payload.hotel_name,
-          country: payload.country,
-          thai_province: payload.thai_province || null,
+          vip_fullname: payload.vip_fullname,
+          vip_position: payload.vip_position,
+          vip_organization: payload.vip_organization,
+          vip_phone: payload.vip_phone,
+          followers: payload.followers,  // แนะนำให้คอลัมน์เป็นชนิด jsonb
           consent: !!payload.consent
         });
 
@@ -436,22 +405,39 @@
       }
     }
 
-    // ---------- Province toggle ----------
-    const countryEl = document.getElementById('country');
-    const provinceWrapper = document.getElementById('province-wrapper');
-    const provinceEl = document.getElementById('thai_province');
+    // ---------- Dynamic followers ----------
+    const followersWrapper = document.getElementById('followers-wrapper');
+    const addFollowerBtn = document.getElementById('add-follower-btn');
+    let followerCount = 1;
 
-    function toggleProvince() {
-      const isTH = countryEl.value === 'Thailand';
-      provinceWrapper.classList.toggle('hidden', !isTH);
-      if (!isTH) provinceEl.value = '';
-    }
-
-    countryEl.addEventListener('change', toggleProvince);
-    toggleProvince(); // initial
+    addFollowerBtn.addEventListener('click', () => {
+      followerCount += 1;
+      const block = document.createElement('div');
+      block.className = 'follower-block';
+      block.innerHTML = `
+        <div class="follower-title">ผู้ติดตามคนที่ ${followerCount} / Accompanying Guest ${followerCount}</div>
+        <div class="row two">
+          <div>
+            <label class="title">ชื่อ–นามสกุล<span class="en-label"> / Full Name</span></label>
+            <input class="follower-name">
+          </div>
+          <div>
+            <label class="title">ตำแหน่ง / ความสัมพันธ์<span class="en-label"> / Role / Relation</span></label>
+            <input class="follower-position" placeholder="เช่น Assistant, Staff, Spouse">
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label class="title">เบอร์ติดต่อผู้ติดตาม<span class="en-label"> / Contact Phone</span></label>
+            <input class="follower-phone" type="tel" placeholder="+66 ... / +...">
+          </div>
+        </div>
+      `;
+      followersWrapper.appendChild(block);
+    });
 
     // ---------- Form Submit ----------
-    const form = document.getElementById('hotel-form');
+    const form = document.getElementById('vip-form');
     const submitBtn = document.getElementById('submit-btn');
     const messageBox = document.getElementById('message');
 
@@ -460,15 +446,26 @@
       messageBox.className = 'hidden';
       messageBox.textContent = '';
 
+      const vipFirst = document.getElementById('vip_first_name').value.trim();
+      const vipLast = document.getElementById('vip_last_name').value.trim();
+
+      const followers = [];
+      document.querySelectorAll('.follower-block').forEach(block => {
+        const name = (block.querySelector('.follower-name')?.value || '').trim();
+        const position = (block.querySelector('.follower-position')?.value || '').trim();
+        const phone = (block.querySelector('.follower-phone')?.value || '').trim();
+        // บันทึกเฉพาะถ้ามีกรอกอย่างน้อย 1 ช่อง
+        if (name || position || phone) {
+          followers.push({ name, position, phone });
+        }
+      });
+
       const payload = {
-        first_name_th: document.getElementById('first_name_th').value.trim(),
-        last_name_th: document.getElementById('last_name_th').value.trim(),
-        first_name_en: document.getElementById('first_name_en').value.trim(),
-        last_name_en: document.getElementById('last_name_en').value.trim(),
-        phone: document.getElementById('phone').value.trim(),
-        hotel_name: document.getElementById('hotel_name').value.trim(),
-        country: countryEl.value,
-        thai_province: provinceEl.value || '',
+        vip_fullname: vipFirst + ' ' + vipLast,
+        vip_position: document.getElementById('vip_position').value.trim(),
+        vip_organization: document.getElementById('vip_organization').value.trim(),
+        vip_phone: document.getElementById('vip_phone').value.trim(),
+        followers: followers, // จะถูกส่งเป็น JSON ไปยังคอลัมน์ jsonb
         consent: document.getElementById('consent').checked
       };
 
@@ -480,16 +477,16 @@
 
         messageBox.className = 'success';
         messageBox.textContent =
-          'บันทึกข้อมูลเรียบร้อยแล้ว ขอบคุณที่ลงทะเบียนรับ Complimentary Ticket.';
+          'บันทึกข้อมูล VIP เรียบร้อยแล้ว ขอบคุณที่ลงทะเบียนเข้าร่วมงาน.';
         form.reset();
-        toggleProvince(); // reset province visibility
+        messageBox.scrollIntoView({ behavior:'smooth', block:'center' });
       } catch (err) {
         messageBox.className = 'error';
         messageBox.textContent =
-          'เกิดข้อผิดพลาดในการบันทึกข้อมูล กรุณาลองอีกครั้ง หรือแจ้งเจ้าหน้าที่หน้าบูธ.';
+          'เกิดข้อผิดพลาดในการบันทึกข้อมูล กรุณาลองอีกครั้ง หรือแจ้งเจ้าหน้าที่.';
       } finally {
         submitBtn.disabled = false;
-        submitBtn.textContent = 'ส่งข้อมูลลงทะเบียน • Submit Registration';
+        submitBtn.textContent = 'ส่งข้อมูลลงทะเบียน • Submit VIP Registration';
       }
     });
   </script>
