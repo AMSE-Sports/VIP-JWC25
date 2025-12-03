@@ -22,6 +22,15 @@
       color:#111;
     }
 
+    .header {
+      background:#000;
+    }
+    .header img {
+      display:block;
+      width:100%;
+      height:auto;
+    }
+
     .hidden { display:none!important; }
 
     .container {
@@ -48,9 +57,7 @@
       font-weight:900;
     }
 
-    .body {
-      padding:20px;
-    }
+    .body { padding:20px; }
 
     .row { display:grid; gap:16px; margin-bottom:16px; }
     .two { grid-template-columns:1fr 1fr; }
@@ -89,16 +96,7 @@
       background:#ddd;
       border-radius:12px;
       font-size:16px;
-    }
-
-    .success {
-      padding:14px;
-      margin-top:14px;
-      border-radius:12px;
-      background:#ecfdf3;
-      border:1px solid #bbf7d0;
-      color:#166534;
-      font-size:16px;
+      margin-bottom:10px;
     }
 
     .thankyou-screen {
@@ -119,6 +117,12 @@
 </head>
 
 <body>
+
+  <!-- HEADER IMAGE -->
+  <div class="header">
+    <img src="Header.png" alt="WGP#1 Waterjet World Cup 2025 Header">
+  </div>
+
   <main class="container">
 
     <!-- ========================= -->
@@ -159,7 +163,7 @@
 
         <div id="followers-container"></div>
 
-        <button type="button" class="btn btn-small" onclick="addFollower()">
+        <button type="button" class="btn-small" onclick="addFollower()">
           ➕ เพิ่มผู้ติดตาม
         </button>
 
@@ -169,8 +173,6 @@
         <button type="submit" class="btn btn-primary" id="submit-btn">
           ส่งข้อมูล • Submit Registration
         </button>
-
-        <div id="message" class="hidden"></div>
 
       </form>
     </section>
@@ -185,7 +187,7 @@
 
         <br>
         <button class="btn btn-primary" onclick="returnToForm()">
-          ลงทะเบียนใหม่ • New Registration
+            กลับหน้าหลัก • Back to Home page
         </button>
       </div>
     </section>
@@ -194,7 +196,9 @@
 
   <script>
     const SUPABASE_URL = "https://mhecpnqwwxspxfhdvzsc.supabase.co";
-    const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1oZWNwbnF3d3hzcHhmaGR2enNjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwMDc0MjEsImV4cCI6MjA3ODU4MzQyMX0.ONaEMqU6BHuMSywE3Yvtbj78NqBbecI18amsD18Cgnc";
+    const SUPABASE_ANON =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1oZWNwbnF3d3hzcHhmaGR2enNjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwMDc0MjEsImV4cCI6MjA3ODU4MzQyMX0.ONaEMqU6BHuMSywE3Yvtbj78NqBbecI18amsD18Cgnc";
+
     const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
     let followerIndex = 0;
@@ -260,12 +264,11 @@
 
         if (error) throw error;
 
-        // Success → Show thank you
         document.getElementById("form-screen").classList.add("hidden");
         document.getElementById("thankyou-screen").classList.remove("hidden");
 
       } catch (err) {
-        alert("เกิดข้อผิดพลาด: " + err.message);
+        alert("ผิดพลาด: " + err.message);
       } finally {
         btn.disabled = false;
         btn.textContent = "ส่งข้อมูล • Submit Registration";
