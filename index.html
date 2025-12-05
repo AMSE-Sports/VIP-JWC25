@@ -262,14 +262,23 @@
     }
 
     .vip-photo {
-      width:110px;
-      height:110px;
-      border-radius:12px;
-      object-fit:cover;
-      border:1px solid var(--border);
-      background:#e5e7eb;
-      flex-shrink:0;
-    }
+  width:140px;
+  height:140px;
+  border-radius:14px;
+  object-fit:cover;
+  border:1px solid var(--border);
+  background:#e5e7eb;
+  flex-shrink:0;
+}
+
+/* จอใหญ่ ขยายให้เห็นหน้าชัดขึ้นอีก */
+@media (min-width:768px) {
+  .vip-photo {
+    width:180px;
+    height:180px;
+  }
+}
+
 
     .vip-info {
       flex:1;
@@ -325,6 +334,14 @@
       margin-bottom:8px;
     }
 
+    .consent-note {
+  margin-top:4px;
+  font-size:var(--font-note);
+  color:#6b7280;
+  line-height:1.5;
+}
+
+    
     .consent-item input {
       width:18px;
       height:18px;
@@ -412,24 +429,22 @@
         <div id="guest-info"></div>
 
         <div class="consent-box">
-          <div class="consent-item">
-            <input type="checkbox" id="guest-consent">
-            <label for="guest-consent">
-              ฉันยินยอมให้ผู้จัดงานเก็บและใช้ข้อมูลส่วนบุคคลของฉัน
-              เพื่อการจัดงาน การรักษาความปลอดภัย และการติดต่อสื่อสารที่เกี่ยวข้อง
-            </label>
-          </div>
-        </div>
+  <div class="consent-item">
+    <input type="checkbox" id="guest-consent">
+    <label for="guest-consent">
+      ฉันยินยอมให้ผู้จัดงานเก็บและใช้ข้อมูลส่วนบุคคลของฉัน
+      เพื่อการจัดงาน การรักษาความปลอดภัย และการติดต่อสื่อสารที่เกี่ยวข้อง
+    </label>
+  </div>
 
-        <div class="divider"></div>
+  <p class="consent-note">
+    โดยการติ๊กถูกและกดปุ่ม <strong>“กดรับสิทธิ”</strong> ฉันยืนยันว่า:
+    <br>• ข้อมูลที่ให้ไว้เป็นข้อมูลที่ถูกต้องตามความเป็นจริง
+    <br>• ยินยอมให้บันทึกเวลาการรับสิทธิ VIP ไว้ในระบบของผู้จัดงาน
+    <br>• เข้าใจว่าการรับสิทธิ VIP ครั้งนี้ใช้ได้สำหรับการออกบัตร / สายข้อมือ ตามจำนวนที่ระบุเท่านั้น
+  </p>
+</div>
 
-        <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; margin-top:6px;">
-          <button type="button" class="btn-outline" id="btn-back-to-staff">ย้อนกลับ / ให้เจ้าหน้าที่ตรวจสอบอีกครั้ง</button>
-          <button type="button" class="btn-primary" id="btn-accept">
-            <span id="btn-accept-text">กดรับสิทธิ</span>
-            <span id="btn-accept-loading" style="display:none;">กำลังดำเนินการ...</span>
-          </button>
-        </div>
 
         <div id="guest-status-container"></div>
       </div>
