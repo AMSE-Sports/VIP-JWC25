@@ -262,23 +262,21 @@
     }
 
     .vip-photo {
-  width:140px;
-  height:140px;
-  border-radius:14px;
-  object-fit:cover;
-  border:1px solid var(--border);
-  background:#e5e7eb;
-  flex-shrink:0;
-}
+      width:140px;
+      height:140px;
+      border-radius:14px;
+      object-fit:cover;
+      border:1px solid var(--border);
+      background:#e5e7eb;
+      flex-shrink:0;
+    }
 
-/* จอใหญ่ ขยายให้เห็นหน้าชัดขึ้นอีก */
-@media (min-width:768px) {
-  .vip-photo {
-    width:180px;
-    height:180px;
-  }
-}
-
+    @media (min-width:768px) {
+      .vip-photo {
+        width:180px;
+        height:180px;
+      }
+    }
 
     .vip-info {
       flex:1;
@@ -334,19 +332,18 @@
       margin-bottom:8px;
     }
 
-    .consent-note {
-  margin-top:4px;
-  font-size:var(--font-note);
-  color:#6b7280;
-  line-height:1.5;
-}
-
-    
     .consent-item input {
       width:18px;
       height:18px;
       margin-top:2px;
       accent-color:var(--primary);
+    }
+
+    .consent-note {
+      margin-top:4px;
+      font-size:var(--font-note);
+      color:#6b7280;
+      line-height:1.5;
     }
 
     .status {
@@ -408,7 +405,7 @@
             <label for="search_name">ค้นหาชื่อ–นามสกุล VIP</label>
             <input id="search_name" type="text" placeholder="พิมพ์อย่างน้อย 2 ตัวอักษร แล้วกดค้นหา">
           </div>
-          <button id="btn-search" class="btn-primary">ค้นหา</button>
+          <button id="btn-search" class="btn-primary" type="button">ค้นหา</button>
         </div>
 
         <div id="search-results" class="results" style="display:none;"></div>
@@ -429,24 +426,42 @@
         <div id="guest-info"></div>
 
         <div class="consent-box">
-  <div class="consent-item">
-    <input type="checkbox" id="guest-consent">
-    <label for="guest-consent">
-      ฉันยินยอมให้ผู้จัดงานเก็บและใช้ข้อมูลส่วนบุคคลของฉัน
-      เพื่อการจัดงาน การรักษาความปลอดภัย และการติดต่อสื่อสารที่เกี่ยวข้อง
-    </label>
-  </div>
+          <div class="consent-item">
+            <input type="checkbox" id="guest-consent">
+            <label for="guest-consent">
+              ฉันยินยอมให้ผู้จัดงานเก็บและใช้ข้อมูลส่วนบุคคลของฉัน
+              เพื่อการจัดงาน การรักษาความปลอดภัย และการติดต่อสื่อสารที่เกี่ยวข้องกับงานนี้
+            </label>
+          </div>
 
-  <p class="consent-note">
-    โดยการติ๊กถูกและกดปุ่ม <strong>“กดรับสิทธิ”</strong> ฉันยืนยันว่า:
-    <br>• ข้อมูลที่ให้ไว้เป็นข้อมูลที่ถูกต้องตามความเป็นจริง
-    <br>• ยินยอมให้บันทึกเวลาการรับสิทธิ VIP ไว้ในระบบของผู้จัดงาน
-    <br>• เข้าใจว่าการรับสิทธิ VIP ครั้งนี้ใช้ได้สำหรับการออกบัตร / สายข้อมือ ตามจำนวนที่ระบุเท่านั้น
-  </p>
-</div>
-
+          <p class="consent-note">
+            โดยการติ๊กถูกและกดปุ่ม <strong>“กดรับสิทธิ”</strong> ฉันยืนยันว่า:
+            <br>• ข้อมูลที่ให้ไว้เป็นข้อมูลที่ถูกต้องตามความเป็นจริง
+            <br>• ยินยอมให้บันทึกเวลาการรับสิทธิ VIP ไว้ในระบบของผู้จัดงาน
+            <br>• เข้าใจว่าการรับสิทธิ VIP ครั้งนี้ใช้ได้สำหรับการออกบัตร / สายข้อมือ ตามจำนวนที่ระบุเท่านั้น
+            <br><br>
+            ข้อมูลของฉันอาจถูกใช้เพื่อ:
+            <br>• การจัดทำสถิติจำนวนผู้เข้าร่วมงานและการรายงานผลการจัดงาน
+            <br>• การสื่อสารข้อมูลสำคัญเกี่ยวกับงานนี้ หรือกิจกรรมที่เกี่ยวข้องโดยตรง
+            <br>• การรักษาความปลอดภัย การตรวจสอบตัวตน และการป้องกันการใช้สิทธิ์โดยมิชอบ
+            <br><br>
+            ผู้จัดงานจะเก็บรักษาข้อมูลไว้ในระยะเวลาที่เหมาะสมกับวัตถุประสงค์ของการจัดงาน
+            และจะไม่เปิดเผยข้อมูลแก่บุคคลภายนอก นอกจากหน่วยงานหรือคู่ค้าที่เกี่ยวข้องกับงานนี้โดยชอบ
+            <br>หากต้องการขอแก้ไข หรือลบข้อมูล สามารถติดต่อเจ้าหน้าที่ผู้จัดงานได้ตามช่องทางที่กำหนด
+          </p>
+        </div>
 
         <div id="guest-status-container"></div>
+
+        <div style="margin-top:14px; display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;">
+          <button type="button" class="btn-ghost" id="btn-back-to-staff">
+            กลับให้เจ้าหน้าที่ค้นหาใหม่
+          </button>
+          <button type="button" class="btn-primary" id="btn-accept">
+            <span id="btn-accept-text">กดรับสิทธิ VIP</span>
+            <span id="btn-accept-loading" style="display:none;">กำลังบันทึก...</span>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -478,7 +493,6 @@
 </div>
 
 <script>
-  // TODO: แทนที่ด้วยข้อมูลโปรเจกต์จริงของคุณ
   const SUPABASE_URL = "https://mhecpnqwwxspxfhdvzsc.supabase.co";
   const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1oZWNwbnF3d3hzcHhmaGR2enNjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwMDc0MjEsImV4cCI6MjA3ODU4MzQyMX0.ONaEMqU6BHuMSywE3Yvtbj78NqBbecI18amsD18Cgnc";
 
@@ -504,7 +518,7 @@
 
   const btnBackHome = document.getElementById('btn-back-home');
 
-  let currentVip = null; // object vip_guests record
+  let currentVip = null;
 
   function showStaffStatus(type, strongText, message) {
     staffStatusContainer.innerHTML = `
