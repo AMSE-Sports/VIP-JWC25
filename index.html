@@ -3,9 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>VIP Registration • WGP#1</title>
+  <title>VIP Check-in • WGP#1</title>
 
-  <!-- Supabase JS Client -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.48.0/dist/umd/supabase.js"></script>
 
   <style>
@@ -13,482 +12,731 @@
       --primary:#f37021;
       --border:#e5e7eb;
       --ok:#16a34a;
-      --font-base:clamp(18px, 2vw, 20px);
-      --font-label:clamp(17px, 1.9vw, 19px);
-      --font-title:clamp(24px, 3vw, 30px);
-      --font-note:clamp(14px, 1.6vw, 16px);
+
+      --font-base:clamp(18px, 2.4vw, 22px);
+      --font-label:clamp(18px, 2.4vw, 22px);
+      --font-title:clamp(26px, 3.2vw, 32px);
+      --font-note:clamp(15px, 2vw, 18px);
     }
 
     * { box-sizing:border-box; }
 
     body {
       margin:0;
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
-      background:#f9fafb;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      background:#f3f4f6;
       color:#111827;
-      font-size:var(--font-base);
     }
 
-    .header {
-      background:#000;
-    }
-    .header img {
-      display:block;
-      width:100%;
-      height:auto;
-    }
-
-    .container {
-      max-width:980px;
-      margin:0 auto;
-      padding:24px 16px 40px;
+    .page {
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:16px;
     }
 
     .card {
+      width:100%;
+      max-width:800px;
       background:#fff;
       border-radius:18px;
-      box-shadow:0 10px 40px rgba(15,23,42,0.08);
-      border:1px solid #e5e7eb;
-      overflow:hidden;
+      border:1px solid var(--border);
+      box-shadow:0 10px 25px rgba(15,23,42,0.08);
+      padding:22px 18px 24px;
     }
 
-    .head {
-      padding:20px 20px 12px;
-      border-bottom:1px solid var(--border);
+    @media (min-width:640px) {
+      .card {
+        padding:26px 32px 28px;
+        border-radius:22px;
+      }
     }
 
-    .head h1 {
-      margin:0 0 4px;
+    .title {
       font-size:var(--font-title);
-      font-weight:900;
+      font-weight:700;
+      text-align:center;
+      margin:0 0 4px;
+      color:#111827;
     }
 
-    .head p {
-      margin:0;
+    .subtitle {
+      font-size:var(--font-base);
+      text-align:center;
+      margin:0 0 16px;
+      color:#4b5563;
+    }
+
+    .badge {
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:4px 10px;
+      border-radius:999px;
+      background:rgba(243,112,33,0.08);
+      color:#b45309;
+      font-size:var(--font-note);
+      margin:0 auto 10px;
+    }
+
+    .badge-dot {
+      width:8px;
+      height:8px;
+      border-radius:999px;
+      background:var(--primary);
+    }
+
+    .section {
+      margin-top:10px;
+      border-top:1px dashed var(--border);
+      padding-top:12px;
+    }
+
+    .section-title {
+      font-size:var(--font-label);
+      font-weight:700;
+      margin-bottom:6px;
+      color:#111827;
+    }
+
+    .section-caption {
+      font-size:var(--font-note);
+      color:#6b7280;
+      margin-bottom:8px;
+    }
+
+    .field {
+      margin-bottom:10px;
+    }
+
+    label {
+      display:block;
+      font-size:var(--font-label);
+      font-weight:600;
+      margin-bottom:4px;
+      color:#111827;
+    }
+
+    input[type="text"] {
+      width:100%;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      font-size:var(--font-base);
+      outline:none;
+      background:#f9fafb;
+      transition:border-color 0.15s, box-shadow 0.15s, background 0.15s;
+    }
+
+    input:focus {
+      border-color:var(--primary);
+      background:#fff;
+      box-shadow:0 0 0 1px rgba(243,112,33,0.08);
+    }
+
+    button {
+      border:none;
+      border-radius:999px;
+      font-size:var(--font-base);
+      padding:10px 20px;
+      cursor:pointer;
+      font-weight:600;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+    }
+
+    .btn-primary {
+      background:var(--primary);
+      color:#fff;
+      min-width:160px;
+    }
+
+    .btn-primary[disabled] {
+      opacity:0.7;
+      cursor:wait;
+    }
+
+    .btn-outline {
+      background:#fff;
+      color:#374151;
+      border:1px solid var(--border);
+    }
+
+    .btn-ghost {
+      background:transparent;
+      color:#6b7280;
+      border:none;
+    }
+
+    .search-row {
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+
+    @media (min-width:640px) {
+      .search-row {
+        flex-direction:row;
+        align-items:flex-end;
+      }
+    }
+
+    .search-row .field {
+      flex:1;
+      margin-bottom:0;
+    }
+
+    .results {
+      margin-top:10px;
+      max-height:220px;
+      overflow:auto;
+      border-radius:12px;
+      border:1px solid var(--border);
+    }
+
+    .result-item {
+      padding:8px 12px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:8px;
+      cursor:pointer;
+      font-size:var(--font-base);
+    }
+
+    .result-item:nth-child(odd) {
+      background:#f9fafb;
+    }
+
+    .result-item:hover {
+      background:#fee2d5;
+    }
+
+    .result-name {
+      font-weight:600;
+    }
+
+    .result-org {
+      font-size:var(--font-note);
+      color:#6b7280;
+    }
+
+    .badge-status {
+      font-size:var(--font-note);
+      padding:2px 8px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      white-space:nowrap;
+    }
+
+    .badge-status.ok {
+      border-color:var(--ok);
+      color:#166534;
+      background:#ecfdf5;
+    }
+
+    .badge-status.done {
+      border-color:#22c55e;
+      color:#166534;
+      background:#bbf7d0;
+    }
+
+    .badge-status.warn {
+      border-color:#f97316;
+      color:#9a3412;
+      background:#ffedd5;
+    }
+
+    .vip-card-staff {
+      margin-top:12px;
+      display:flex;
+      gap:16px;
+      align-items:flex-start;
+      border-radius:14px;
+      padding:12px;
+      background:#f9fafb;
+      border:1px solid var(--border);
+    }
+
+    .vip-photo {
+      width:110px;
+      height:110px;
+      border-radius:12px;
+      object-fit:cover;
+      border:1px solid var(--border);
+      background:#e5e7eb;
+      flex-shrink:0;
+    }
+
+    .vip-info {
+      flex:1;
+      font-size:var(--font-base);
+    }
+
+    .vip-info-row {
+      margin-bottom:4px;
+    }
+
+    .vip-label {
+      font-weight:600;
+      margin-right:4px;
+    }
+
+    .status-box {
+      margin-top:6px;
+      padding:6px 10px;
+      border-radius:12px;
+      font-size:var(--font-note);
+    }
+
+    .status-box.warn {
+      background:#fffbeb;
+      color:#713f12;
+      border:1px solid #facc15;
+    }
+
+    .status-box.done {
+      background:#ecfdf5;
+      color:#166534;
+      border:1px solid #22c55e;
+    }
+
+    .divider {
+      border-top:1px dashed #e5e7eb;
+      margin:14px 0;
+    }
+
+    .consent-box {
+      margin-top:8px;
+      padding:10px 12px;
+      border-radius:12px;
+      background:#f9fafb;
       font-size:var(--font-note);
       color:#4b5563;
     }
 
-    .body {
-      padding:20px;
-    }
-
-    .row {
-      display:grid;
-      grid-template-columns:1fr;
-      gap:16px;
-      margin-bottom:16px;
-    }
-
-    @media (min-width:760px) {
-      .row.two {
-        grid-template-columns:1fr 1fr;
-      }
-    }
-
-    label.title {
-      font-weight:800;
-      font-size:var(--font-label);
-      margin-bottom:6px;
-      display:block;
-    }
-
-    .en-label {
-      font-weight:600;
-      color:#6b7280;
-      font-size:calc(var(--font-label) - 1px);
-      margin-left:4px;
-    }
-
-    input, select {
-      width:100%;
-      padding:14px 16px;
-      border-radius:14px;
-      border:1px solid var(--border);
-      background:#fff;
-      font-family:inherit;
-      font-size:var(--font-base);
-      outline:none;
-      transition:border-color .15s, box-shadow .15s, background .15s;
-    }
-
-    input:focus, select:focus {
-      border-color:var(--primary);
-      box-shadow:0 0 0 3px rgba(243,112,33,.18);
-    }
-
-    .note {
-      font-size:var(--font-note);
-      color:#6b7280;
-    }
-
-    .btn {
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding:14px 20px;
-      border-radius:14px;
-      border:none;
-      cursor:pointer;
-      font-weight:800;
-      font-size:var(--font-base);
-    }
-
-    .btn-primary {
-      width:100%;
-      background:var(--primary);
-      color:#fff;
-      box-shadow:0 12px 30px -16px rgba(248,113,22,0.9);
-    }
-
-    .btn-primary:disabled {
-      opacity:.6;
-      cursor:default;
-      box-shadow:none;
-    }
-
-    .btn-secondary {
-      background:#fff;
-      color:#111827;
-      border:1px solid #d1d5db;
-      box-shadow:0 4px 14px rgba(15,23,42,0.06);
-      gap:8px;
-    }
-
-    .footer {
-      margin-top:12px;
-      text-align:center;
-      font-size:var(--font-note);
-      color:#9ca3af;
-    }
-
-    /* Consent */
-    .consent-box {
-      padding:14px 14px 10px;
-      border-radius:14px;
-      background:#f9fafb;
-      border:1px solid #e5e7eb;
-      margin-top:4px;
-    }
-
-    .consent-check {
+    .consent-item {
       display:flex;
       align-items:flex-start;
-      gap:10px;
-      margin-top:10px;
-      font-size:var(--font-base);
+      gap:8px;
+      margin-bottom:8px;
     }
 
-    .consent-check input[type="checkbox"] {
-      flex:0 0 auto;
-      width:1.25em;
-      height:1.25em;
-      margin-top:0.25em;
+    .consent-item input {
+      width:18px;
+      height:18px;
+      margin-top:2px;
       accent-color:var(--primary);
     }
 
-    .hidden { display:none!important; }
-
-    .success {
-      margin-top:18px;
-      padding:14px 16px;
-      border-radius:12px;
-      background:#ecfdf3;
-      border:1px solid #bbf7d0;
-      color:#166534;
+    .status {
+      margin-top:12px;
       font-size:var(--font-note);
+      display:flex;
+      align-items:flex-start;
+      gap:8px;
     }
 
-    .error {
-      margin-top:18px;
-      padding:14px 16px;
-      border-radius:12px;
-      background:#fef2f2;
-      border:1px solid #fecaca;
-      color:#b91c1c;
-      font-size:var(--font-note);
+    .status-icon {
+      width:18px;
+      height:18px;
+      border-radius:999px;
+      flex-shrink:0;
     }
 
-    /* ทำให้ select/option ใหญ่ขึ้นบน iPad / tablet */
-    @media (min-width:768px) and (pointer:coarse) {
-      select, select option {
-        font-size:22px;
-        line-height:1.6;
-      }
+    .status-success .status-icon {
+      background:var(--ok);
     }
 
-    .section-title {
-      font-weight:800;
-      font-size:var(--font-label);
-      margin:6px 0 4px;
-      padding:6px 10px;
-      border-radius:10px;
-      background:#fff7f1;
-      border:1px solid #fed7aa;
-      color:#b45309;
+    .status-error .status-icon {
+      background:#dc2626;
     }
 
-    .follower-block {
-      padding:12px 14px;
-      border-radius:12px;
-      border:1px solid #e5e7eb;
-      background:#f9fafb;
-      margin-bottom:10px;
+    .status-text-strong {
+      font-weight:600;
+      margin-bottom:2px;
     }
 
-    .follower-title {
-      font-weight:700;
-      font-size:var(--font-note);
-      margin-bottom:8px;
-      color:#374151;
+    .center {
+      text-align:center;
     }
   </style>
 </head>
 <body>
-  <!-- HEADER IMAGE -->
-  <div class="header">
-    <img src="Header.png" alt="WGP#1 Waterjet World Cup 2025 Header">
-  </div>
+<div class="page">
+  <div class="card">
+    <div class="badge">
+      <span class="badge-dot"></span>
+      <span>VIP Check-in • Staff & Guest View</span>
+    </div>
 
-  <main class="container">
-    <div class="card">
-      <div class="head">
-        <h1>VIP Registration</h1>
-        <p>ลงทะเบียนแขก VIP และผู้ติดตาม สำหรับเข้าร่วมงาน WGP#1 Waterjet World Cup 2025</p>
+    <h1 class="title">VIP Check-in</h1>
+    <p class="subtitle">
+      เจ้าหน้าที่ค้นหาชื่อ VIP → ยืนยันจากรูปภาพ → ส่งต่ออุปกรณ์ให้ผู้รับ VIP กดยินยอมและรับสิทธิ
+    </p>
+
+    <!-- STATE 1: SEARCH & STAFF VIEW -->
+    <div id="view-search">
+      <div class="section">
+        <div class="section-title">ส่วนที่ 1 • เจ้าหน้าที่หน้างาน</div>
+        <div class="section-caption">
+          ค้นหาจากชื่อ–นามสกุล VIP แล้วกดเลือกรายชื่อที่ถูกต้อง
+        </div>
+
+        <div class="search-row">
+          <div class="field">
+            <label for="search_name">ค้นหาชื่อ–นามสกุล VIP</label>
+            <input id="search_name" type="text" placeholder="พิมพ์อย่างน้อย 2 ตัวอักษร แล้วกดค้นหา">
+          </div>
+          <button id="btn-search" class="btn-primary">ค้นหา</button>
+        </div>
+
+        <div id="search-results" class="results" style="display:none;"></div>
+
+        <div id="staff-selected-container"></div>
+        <div id="staff-status-container"></div>
       </div>
-
-      <form class="body" id="vip-form">
-        <!-- A. VIP MAIN GUEST -->
-        <div class="section-title">A. ข้อมูลแขก VIP</div>
-
-        <div class="row two">
-          <div>
-            <label class="title">ชื่อจริง<span class="en-label"> / First Name</span> *</label>
-            <input id="vip_first_name" required>
-          </div>
-          <div>
-            <label class="title">นามสกุล<span class="en-label"> / Last Name</span> *</label>
-            <input id="vip_last_name" required>
-          </div>
-        </div>
-
-        <div class="row two">
-          <div>
-            <label class="title">ตำแหน่ง<span class="en-label"> / Position</span> *</label>
-            <input id="vip_position" required placeholder="เช่น CEO, Director, President">
-          </div>
-          <div>
-            <label class="title">หน่วยงาน / องค์กร<span class="en-label"> / Organization</span> *</label>
-            <input id="vip_organization" required placeholder="เช่น Sports Authority of Thailand">
-          </div>
-        </div>
-
-        <div class="row">
-          <div>
-            <label class="title">เบอร์ติดต่อ (Mobile / WhatsApp) *</label>
-            <input id="vip_phone" type="tel" required placeholder="+66 ... / +...">
-          </div>
-        </div>
-
-        <!-- B. FOLLOWERS -->
-        <div class="section-title">B. ผู้ติดตาม (ถ้ามี)</div>
-
-        <div id="followers-wrapper">
-          <!-- ผู้ติดตามคนที่ 1 (เริ่มต้น) -->
-          <div class="follower-block">
-            <div class="follower-title">ผู้ติดตามคนที่ 1 / Accompanying Guest 1</div>
-            <div class="row two">
-              <div>
-                <label class="title">ชื่อ–นามสกุล<span class="en-label"> / Full Name</span></label>
-                <input class="follower-name">
-              </div>
-              <div>
-                <label class="title">ตำแหน่ง / ความสัมพันธ์<span class="en-label"> / Role / Relation</span></label>
-                <input class="follower-position" placeholder="เช่น Assistant, Staff, Spouse">
-              </div>
-            </div>
-            <div class="row">
-              <div>
-                <label class="title">เบอร์ติดต่อผู้ติดตาม<span class="en-label"> / Contact Phone</span></label>
-                <input class="follower-phone" type="tel" placeholder="+66 ... / +...">
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <button type="button" class="btn btn-secondary" id="add-follower-btn" style="margin-bottom:10px;">
-          + เพิ่มผู้ติดตาม • Add Accompanying Guest
-        </button>
-
-        <!-- C. CONSENT -->
-        <div class="section-title">C. Consent</div>
-
-        <div class="row">
-          <div>
-            <label class="title">การจัดเก็บข้อมูล และการใช้ภาพ/วิดีโอ</label>
-            <div class="consent-box">
-              <p class="note">
-                TH: ข้าพเจ้าขอรับรองว่าข้อมูลที่ให้ไว้ในแบบฟอร์มนี้เป็นความจริง และยินยอมให้ผู้จัดงาน
-                WGP#1 Waterjet World Cup 2025 จัดเก็บและใช้ข้อมูลของข้าพเจ้าและผู้ติดตาม
-                เพื่อการบริหารจัดการงาน การจัดลำดับที่นั่ง พิธีการ การรักษาความปลอดภัย
-                และการติดต่อประสานงานที่เกี่ยวข้องกับการแข่งขันเท่านั้น
-                ข้อมูลจะไม่ถูกนำไปใช้ในวัตถุประสงค์อื่นโดยไม่ได้รับความยินยอมเพิ่มเติม
-              </p>
-              <p class="note">
-                นอกจากนี้ การเข้าร่วมงานซึ่งมีการถ่ายทอดสดและเผยแพร่สู่สาธารณะทั่วโลก
-                ถือเป็นการยินยอมให้ผู้จัดงานและพันธมิตร สามารถบันทึกภาพนิ่ง วิดีโอ และเสียงของท่าน
-                เพื่อนำไปใช้ในสื่อประชาสัมพันธ์ โฆษณา ถ่ายทอดสด คลิปไฮไลต์ และสื่ออื่น ๆ ที่เกี่ยวข้อง
-                โดยไม่ต้องขออนุญาตเป็นรายครั้ง หรือจ่ายค่าตอบแทนเพิ่มเติม
-              </p>
-              <p class="note">
-                EN: I confirm that the information provided in this form is accurate and complete, and I consent to the
-                organizers of the WGP#1 Waterjet World Cup 2025 collecting and using my personal data and that of my
-                accompanying guests solely for event management, seating and protocol arrangements, security,
-                and official communications related to the event. The data will not be used for other purposes
-                without further consent.
-              </p>
-              <p class="note">
-                By attending the event, I also grant the organizers and their partners the right to photograph, film,
-                and record my image and voice (and those of my accompanying guests) for broadcasting, promotions,
-                advertising, live streaming, highlight clips, and other related media, without the need for
-                additional permission or compensation.
-              </p>
-
-              <label class="consent-check">
-                <input type="checkbox" id="consent" required>
-                <span>
-                  ฉันได้อ่านและยินยอมตามเงื่อนไขการใช้ข้อมูลและการบันทึกภาพ/วิดีโอข้างต้น<br>
-                  I have read and consent to the personal data and media conditions above.
-                </span>
-              </label>
-            </div>
-          </div>
-        </div>
-
-        <button type="submit" class="btn btn-primary" id="submit-btn">
-          ส่งข้อมูลลงทะเบียน • Submit VIP Registration
-        </button>
-
-        <div id="message" class="hidden"></div>
-      </form>
     </div>
 
-    <div class="footer">
-      © 2025 WGP#1 Waterjet World Cup
+    <!-- STATE 2: GUEST VIEW -->
+    <div id="view-guest" style="display:none;">
+      <div class="section">
+        <div class="section-title">ส่วนที่ 2 • ผู้รับ VIP</div>
+        <div class="section-caption">
+          กรุณาตรวจสอบข้อมูลด้านล่าง และกดยืนยันการยินยอมและการรับสิทธิ
+        </div>
+
+        <div id="guest-info"></div>
+
+        <div class="consent-box">
+          <div class="consent-item">
+            <input type="checkbox" id="guest-consent">
+            <label for="guest-consent">
+              ฉันยินยอมให้ผู้จัดงานเก็บและใช้ข้อมูลส่วนบุคคลของฉัน
+              เพื่อการจัดงาน การรักษาความปลอดภัย และการติดต่อสื่อสารที่เกี่ยวข้อง
+            </label>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; margin-top:6px;">
+          <button type="button" class="btn-outline" id="btn-back-to-staff">ย้อนกลับ / ให้เจ้าหน้าที่ตรวจสอบอีกครั้ง</button>
+          <button type="button" class="btn-primary" id="btn-accept">
+            <span id="btn-accept-text">กดรับสิทธิ</span>
+            <span id="btn-accept-loading" style="display:none;">กำลังดำเนินการ...</span>
+          </button>
+        </div>
+
+        <div id="guest-status-container"></div>
+      </div>
     </div>
-  </main>
 
-  <script>
-    // ---------- Supabase Config ----------
-    const SUPABASE_URL = 'https://mhecpnqwwxspxfhdvzsc.supabase.co';
-    const SUPABASE_ANON_KEY =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1oZWNwbnF3d3hzcHhmaGR2enNjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwMDc0MjEsImV4cCI6MjA3ODU4MzQyMX0.ONaEMqU6BHuMSywE3Yvtbj78NqBbecI18amsD18Cgnc';
+    <!-- STATE 3: FINAL VIEW -->
+    <div id="view-final" style="display:none;">
+      <div class="section center">
+        <div class="section-title">Ticket Processed</div>
+        <p class="section-caption">
+          ระบบได้บันทึกการรับสิทธิของคุณเรียบร้อยแล้ว<br>
+          กรุณาส่งต่ออุปกรณ์ให้เจ้าหน้าที่ เพื่อดำเนินการออกตั๋ว
+        </p>
 
-    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        <div class="status status-success" style="justify-content:center;">
+          <div class="status-icon"></div>
+          <div>
+            <div class="status-text-strong">สำเร็จ • VIP Ticket Processed</div>
+            <div>เจ้าหน้าที่สามารถดำเนินการออกตั๋ว / สายข้อมือ ให้กับผู้รับสิทธิได้ทันที</div>
+          </div>
+        </div>
 
-    async function submitToSupabase(payload) {
-      const { error } = await sb
-        // เปลี่ยนชื่อตารางให้ตรงกับที่คุณสร้างใน Supabase
-        .from('vip_ticket_registrations')
-        .insert({
-          vip_fullname: payload.vip_fullname,
-          vip_position: payload.vip_position,
-          vip_organization: payload.vip_organization,
-          vip_phone: payload.vip_phone,
-          followers: payload.followers,  // แนะนำให้คอลัมน์เป็นชนิด jsonb
-          consent: !!payload.consent
-        });
+        <div style="margin-top:18px;">
+          <button type="button" class="btn-primary" id="btn-back-home">
+            กลับไปหน้าแรก (ค้นหา VIP ใหม่)
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-      if (error) {
-        console.error('[Supabase insert error]', error);
-        throw error;
-      }
+<script>
+  // TODO: แทนที่ด้วยข้อมูลโปรเจกต์จริงของคุณ
+  const SUPABASE_URL = "https://YOUR-PROJECT-ID.supabase.co";
+  const SUPABASE_ANON_KEY = "YOUR-ANON-KEY";
+
+  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const viewSearch = document.getElementById('view-search');
+  const viewGuest = document.getElementById('view-guest');
+  const viewFinal = document.getElementById('view-final');
+
+  const searchInput = document.getElementById('search_name');
+  const btnSearch = document.getElementById('btn-search');
+  const resultsBox = document.getElementById('search-results');
+  const staffSelectedContainer = document.getElementById('staff-selected-container');
+  const staffStatusContainer = document.getElementById('staff-status-container');
+
+  const guestInfoBox = document.getElementById('guest-info');
+  const guestConsent = document.getElementById('guest-consent');
+  const btnBackToStaff = document.getElementById('btn-back-to-staff');
+  const btnAccept = document.getElementById('btn-accept');
+  const btnAcceptText = document.getElementById('btn-accept-text');
+  const btnAcceptLoading = document.getElementById('btn-accept-loading');
+  const guestStatusContainer = document.getElementById('guest-status-container');
+
+  const btnBackHome = document.getElementById('btn-back-home');
+
+  let currentVip = null; // object vip_guests record
+
+  function showStaffStatus(type, strongText, message) {
+    staffStatusContainer.innerHTML = `
+      <div class="status status-${type}">
+        <div class="status-icon"></div>
+        <div>
+          <div class="status-text-strong">${strongText}</div>
+          <div>${message}</div>
+        </div>
+      </div>
+    `;
+  }
+
+  function showGuestStatus(type, strongText, message) {
+    guestStatusContainer.innerHTML = `
+      <div class="status status-${type}">
+        <div class="status-icon"></div>
+        <div>
+          <div class="status-text-strong">${strongText}</div>
+          <div>${message}</div>
+        </div>
+      </div>
+    `;
+  }
+
+  function clearAllStatus() {
+    staffStatusContainer.innerHTML = "";
+    guestStatusContainer.innerHTML = "";
+  }
+
+  async function searchVip() {
+    clearAllStatus();
+    staffSelectedContainer.innerHTML = "";
+    resultsBox.innerHTML = "";
+    resultsBox.style.display = "none";
+
+    const keyword = searchInput.value.trim();
+    if (keyword.length < 2) {
+      showStaffStatus("error", "กรุณาพิมพ์อย่างน้อย 2 ตัวอักษร", "เช่น พิมพ์ชื่อ หรือ นามสกุลบางส่วน แล้วลองค้นหาอีกครั้ง.");
+      return;
     }
 
-    // ---------- Dynamic followers ----------
-    const followersWrapper = document.getElementById('followers-wrapper');
-    const addFollowerBtn = document.getElementById('add-follower-btn');
-    let followerCount = 1;
+    btnSearch.disabled = true;
+    btnSearch.textContent = "กำลังค้นหา...";
 
-    addFollowerBtn.addEventListener('click', () => {
-      followerCount += 1;
-      const block = document.createElement('div');
-      block.className = 'follower-block';
-      block.innerHTML = `
-        <div class="follower-title">ผู้ติดตามคนที่ ${followerCount} / Accompanying Guest ${followerCount}</div>
-        <div class="row two">
+    try {
+      const { data, error } = await supabaseClient
+        .from('vip_guests')
+        .select('*')
+        .ilike('full_name', `%${keyword}%`)
+        .order('full_name', { ascending: true })
+        .limit(50);
+
+      if (error) {
+        console.error(error);
+        showStaffStatus("error", "ค้นหาข้อมูลไม่สำเร็จ", "ไม่สามารถค้นหา VIP ได้ในขณะนี้ กรุณาลองใหม่.");
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        showStaffStatus("error", "ไม่พบข้อมูล", "ไม่มีรายชื่อ VIP ที่ตรงกับคำค้นนี้.");
+        return;
+      }
+
+      resultsBox.style.display = "block";
+      resultsBox.innerHTML = "";
+      data.forEach(vip => {
+        const item = document.createElement('div');
+        item.className = "result-item";
+        item.innerHTML = `
           <div>
-            <label class="title">ชื่อ–นามสกุล<span class="en-label"> / Full Name</span></label>
-            <input class="follower-name">
+            <div class="result-name">${vip.full_name || "-"}</div>
+            <div class="result-org">${vip.organization || "-"}</div>
           </div>
-          <div>
-            <label class="title">ตำแหน่ง / ความสัมพันธ์<span class="en-label"> / Role / Relation</span></label>
-            <input class="follower-position" placeholder="เช่น Assistant, Staff, Spouse">
+          <div class="badge-status ${vip.ticket_processed ? "done" : "ok"}">
+            ${vip.ticket_processed ? "Processed" : "Not processed"}
           </div>
-        </div>
-        <div class="row">
-          <div>
-            <label class="title">เบอร์ติดต่อผู้ติดตาม<span class="en-label"> / Contact Phone</span></label>
-            <input class="follower-phone" type="tel" placeholder="+66 ... / +...">
-          </div>
-        </div>
-      `;
-      followersWrapper.appendChild(block);
-    });
-
-    // ---------- Form Submit ----------
-    const form = document.getElementById('vip-form');
-    const submitBtn = document.getElementById('submit-btn');
-    const messageBox = document.getElementById('message');
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      messageBox.className = 'hidden';
-      messageBox.textContent = '';
-
-      const vipFirst = document.getElementById('vip_first_name').value.trim();
-      const vipLast = document.getElementById('vip_last_name').value.trim();
-
-      const followers = [];
-      document.querySelectorAll('.follower-block').forEach(block => {
-        const name = (block.querySelector('.follower-name')?.value || '').trim();
-        const position = (block.querySelector('.follower-position')?.value || '').trim();
-        const phone = (block.querySelector('.follower-phone')?.value || '').trim();
-        // บันทึกเฉพาะถ้ามีกรอกอย่างน้อย 1 ช่อง
-        if (name || position || phone) {
-          followers.push({ name, position, phone });
-        }
+        `;
+        item.addEventListener('click', () => {
+          selectVipForStaff(vip);
+        });
+        resultsBox.appendChild(item);
       });
 
-      const payload = {
-        vip_fullname: vipFirst + ' ' + vipLast,
-        vip_position: document.getElementById('vip_position').value.trim(),
-        vip_organization: document.getElementById('vip_organization').value.trim(),
-        vip_phone: document.getElementById('vip_phone').value.trim(),
-        followers: followers, // จะถูกส่งเป็น JSON ไปยังคอลัมน์ jsonb
-        consent: document.getElementById('consent').checked
-      };
+    } catch (err) {
+      console.error(err);
+      showStaffStatus("error", "เกิดข้อผิดพลาด", "ไม่สามารถเชื่อมต่อระบบได้ในขณะนี้.");
+    } finally {
+      btnSearch.disabled = false;
+      btnSearch.textContent = "ค้นหา";
+    }
+  }
 
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'กำลังบันทึก... / Submitting...';
+  function selectVipForStaff(vip) {
+    currentVip = vip;
+    clearAllStatus();
 
-      try {
-        await submitToSupabase(payload);
+    const processedInfo = vip.ticket_processed
+      ? `<div class="status-box done">
+           ตั๋วนี้ได้ถูก Processed แล้วเมื่อ ${vip.processed_at ? new Date(vip.processed_at).toLocaleString() : "-"}
+         </div>`
+      : `<div class="status-box warn">
+           ตั๋วนี้ยังไม่ถูก Processed เจ้าหน้าที่สามารถดำเนินการต่อได้
+         </div>`;
 
-        messageBox.className = 'success';
-        messageBox.textContent =
-          'บันทึกข้อมูล VIP เรียบร้อยแล้ว ขอบคุณที่ลงทะเบียนเข้าร่วมงาน.';
-        form.reset();
-        messageBox.scrollIntoView({ behavior:'smooth', block:'center' });
-      } catch (err) {
-        messageBox.className = 'error';
-        messageBox.textContent =
-          'เกิดข้อผิดพลาดในการบันทึกข้อมูล กรุณาลองอีกครั้ง หรือแจ้งเจ้าหน้าที่.';
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'ส่งข้อมูลลงทะเบียน • Submit VIP Registration';
-      }
+    staffSelectedContainer.innerHTML = `
+      <div class="vip-card-staff">
+        <img src="${vip.photo_url || ""}" alt="VIP Photo" class="vip-photo">
+        <div class="vip-info">
+          <div class="vip-info-row">
+            <span class="vip-label">ชื่อ–นามสกุล:</span> ${vip.full_name || "-"}
+          </div>
+          <div class="vip-info-row">
+            <span class="vip-label">หน่วยงาน:</span> ${vip.organization || "-"}
+          </div>
+          <div class="vip-info-row">
+            <span class="vip-label">จำนวนบัตรที่ได้รับ:</span> ${vip.ticket_count || "-"}
+          </div>
+          ${processedInfo}
+          <div class="divider"></div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; margin-top:6px;">
+            <button type="button" class="btn-ghost" id="btn-search-again">ค้นหาใหม่</button>
+            <button type="button" class="btn-primary" id="btn-confirm-identity">
+              ยืนยันว่าตรงกับบุคคลนี้ → ไปขั้นตอนผู้รับ VIP
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.getElementById('btn-search-again').addEventListener('click', () => {
+      staffSelectedContainer.innerHTML = "";
+      searchInput.focus();
     });
-  </script>
+
+    document.getElementById('btn-confirm-identity').addEventListener('click', () => {
+      goToGuestView();
+    });
+  }
+
+  function goToGuestView() {
+    if (!currentVip) return;
+    clearAllStatus();
+    guestConsent.checked = false;
+
+    guestInfoBox.innerHTML = `
+      <div class="vip-card-staff" style="border-style:solid;">
+        <div class="vip-info">
+          <div class="vip-info-row">
+            <span class="vip-label">ชื่อ–นามสกุล:</span> ${currentVip.full_name || "-"}
+          </div>
+          <div class="vip-info-row">
+            <span class="vip-label">หน่วยงาน:</span> ${currentVip.organization || "-"}
+          </div>
+          <div class="vip-info-row">
+            <span class="vip-label">จำนวนบัตรที่ได้รับ:</span> ${currentVip.ticket_count || "-"}
+          </div>
+        </div>
+      </div>
+    `;
+
+    viewSearch.style.display = "none";
+    viewGuest.style.display = "block";
+    viewFinal.style.display = "none";
+  }
+
+  function backToStaffFromGuest() {
+    viewSearch.style.display = "block";
+    viewGuest.style.display = "none";
+    viewFinal.style.display = "none";
+    guestStatusContainer.innerHTML = "";
+  }
+
+  function backToHome() {
+    currentVip = null;
+    searchInput.value = "";
+    resultsBox.innerHTML = "";
+    resultsBox.style.display = "none";
+    staffSelectedContainer.innerHTML = "";
+    clearAllStatus();
+
+    viewSearch.style.display = "block";
+    viewGuest.style.display = "none";
+    viewFinal.style.display = "none";
+  }
+
+  async function acceptTicket() {
+    clearAllStatus();
+
+    if (!currentVip) {
+      showGuestStatus("error", "ไม่พบข้อมูล VIP", "กรุณาให้เจ้าหน้าที่ช่วยค้นหาข้อมูลใหม่อีกครั้ง.");
+      return;
+    }
+
+    if (!guestConsent.checked) {
+      showGuestStatus("error", "กรุณายืนยันการยินยอม", "ต้องติ๊กถูกในช่องยินยอมก่อนจึงจะสามารถกดรับสิทธิได้.");
+      return;
+    }
+
+    btnAccept.disabled = true;
+    btnAcceptLoading.style.display = "inline";
+    btnAcceptText.style.display = "none";
+
+    try {
+      const nowIso = new Date().toISOString();
+      const { data, error } = await supabaseClient
+        .from('vip_guests')
+        .update({
+          ticket_processed: true,
+          processed_at: nowIso
+        })
+        .eq('id', currentVip.id)
+        .select()
+        .single();
+
+      if (error) {
+        console.error(error);
+        showGuestStatus("error", "บันทึกไม่สำเร็จ", "ไม่สามารถบันทึกการรับสิทธิได้ กรุณาลองใหม่ หรือให้เจ้าหน้าที่ช่วยตรวจสอบ.");
+        return;
+      }
+
+      currentVip = data;
+      viewSearch.style.display = "none";
+      viewGuest.style.display = "none";
+      viewFinal.style.display = "block";
+
+    } catch (err) {
+      console.error(err);
+      showGuestStatus("error", "เกิดข้อผิดพลาด", "ไม่สามารถเชื่อมต่อระบบได้ในขณะนี้.");
+    } finally {
+      btnAccept.disabled = false;
+      btnAcceptLoading.style.display = "none";
+      btnAcceptText.style.display = "inline";
+    }
+  }
+
+  btnSearch.addEventListener('click', searchVip);
+  searchInput.addEventListener('keydown', (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      searchVip();
+    }
+  });
+
+  btnBackToStaff.addEventListener('click', backToStaffFromGuest);
+  btnAccept.addEventListener('click', acceptTicket);
+  btnBackHome.addEventListener('click', backToHome);
+</script>
 </body>
 </html>
