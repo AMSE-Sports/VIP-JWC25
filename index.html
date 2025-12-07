@@ -28,8 +28,14 @@
       color:#111827;
     }
 
+    /* ===== Header banner (ใหม่) ===== */
+    .header img {
+      width:100%;
+      display:block;
+    }
+
     .page {
-      min-height:100vh;
+      min-height:calc(100vh - 180px);
       display:flex;
       align-items:center;
       justify-content:center;
@@ -380,117 +386,124 @@
   </style>
 </head>
 <body>
-<div class="page">
-  <div class="card">
-    <div class="badge">
-      <span class="badge-dot"></span>
-      <span>VIP Check-in • Staff & Guest View</span>
-    </div>
 
-    <h1 class="title">VIP Check-in</h1>
-    <p class="subtitle">
-      เจ้าหน้าที่ค้นหาชื่อ VIP → ยืนยันจากรูปภาพ → ส่งต่ออุปกรณ์ให้ผู้รับ VIP กดยินยอมและรับสิทธิ
-    </p>
+  <!-- Header Banner -->
+  <div class="header">
+    <!-- เปลี่ยนชื่อไฟล์ให้ตรงกับของจริงได้ -->
+    <img src="Header.png" alt="Thai Airways International WGP#1 Waterjet World Cup 2025">
+  </div>
 
-    <!-- STATE 1: SEARCH & STAFF VIEW -->
-    <div id="view-search">
-      <div class="section">
-        <div class="section-title">ส่วนที่ 1 • เจ้าหน้าที่หน้างาน</div>
-        <div class="section-caption">
-          ค้นหาจากชื่อ–นามสกุล VIP แล้วกดเลือกรายชื่อที่ถูกต้อง
-        </div>
-
-        <div class="search-row">
-          <div class="field">
-            <label for="search_name">ค้นหาชื่อ–นามสกุล VIP</label>
-            <input id="search_name" type="text" placeholder="พิมพ์อย่างน้อย 2 ตัวอักษร แล้วกดค้นหา">
-          </div>
-          <button id="btn-search" class="btn-primary" type="button">ค้นหา</button>
-        </div>
-
-        <div id="search-results" class="results" style="display:none;"></div>
-
-        <div id="staff-selected-container"></div>
-        <div id="staff-status-container"></div>
+  <div class="page">
+    <div class="card">
+      <div class="badge">
+        <span class="badge-dot"></span>
+        <span>VIP Check-in • Staff & Guest View</span>
       </div>
-    </div>
 
-    <!-- STATE 2: GUEST VIEW -->
-    <div id="view-guest" style="display:none;">
-      <div class="section">
-        <div class="section-title">ส่วนที่ 2 • ผู้รับ VIP</div>
-        <div class="section-caption">
-          กรุณาตรวจสอบข้อมูลด้านล่าง และกดยืนยันการยินยอมและการรับสิทธิ
-        </div>
+      <h1 class="title">VIP Check-in</h1>
+      <p class="subtitle">
+        เจ้าหน้าที่ค้นหาชื่อ VIP → ยืนยันจากรูปภาพ → ส่งต่ออุปกรณ์ให้ผู้รับ VIP กดยินยอมและรับสิทธิ
+      </p>
 
-        <div id="guest-info"></div>
-
-        <div class="consent-box">
-          <div class="consent-item">
-            <input type="checkbox" id="guest-consent">
-            <label for="guest-consent">
-              ฉันยินยอมให้ผู้จัดงานเก็บและใช้ข้อมูลส่วนบุคคลของฉัน
-              เพื่อการจัดงาน การรักษาความปลอดภัย และการติดต่อสื่อสารที่เกี่ยวข้องกับงานนี้
-            </label>
+      <!-- STATE 1: SEARCH & STAFF VIEW -->
+      <div id="view-search">
+        <div class="section">
+          <div class="section-title">ส่วนที่ 1 • เจ้าหน้าที่หน้างาน</div>
+          <div class="section-caption">
+            ค้นหาจากชื่อ–นามสกุล VIP แล้วกดเลือกรายชื่อที่ถูกต้อง
           </div>
 
-          <p class="consent-note">
-            โดยการติ๊กถูกและกดปุ่ม <strong>“กดรับสิทธิ”</strong> ฉันยืนยันว่า:
-            <br>• ข้อมูลที่ให้ไว้เป็นข้อมูลที่ถูกต้องตามความเป็นจริง
-            <br>• ยินยอมให้บันทึกเวลาการรับสิทธิ VIP ไว้ในระบบของผู้จัดงาน
-            <br>• เข้าใจว่าการรับสิทธิ VIP ครั้งนี้ใช้ได้สำหรับการออกบัตร / สายข้อมือ ตามจำนวนที่ระบุเท่านั้น
-            <br><br>
-            ข้อมูลของฉันอาจถูกใช้เพื่อ:
-            <br>• การจัดทำสถิติจำนวนผู้เข้าร่วมงานและการรายงานผลการจัดงาน
-            <br>• การสื่อสารข้อมูลสำคัญเกี่ยวกับงานนี้ หรือกิจกรรมที่เกี่ยวข้องโดยตรง
-            <br>• การรักษาความปลอดภัย การตรวจสอบตัวตน และการป้องกันการใช้สิทธิ์โดยมิชอบ
-            <br><br>
-            ผู้จัดงานจะเก็บรักษาข้อมูลไว้ในระยะเวลาที่เหมาะสมกับวัตถุประสงค์ของการจัดงาน
-            และจะไม่เปิดเผยข้อมูลแก่บุคคลภายนอก นอกจากหน่วยงานหรือคู่ค้าที่เกี่ยวข้องกับงานนี้โดยชอบ
-            <br>หากต้องการขอแก้ไข หรือลบข้อมูล สามารถติดต่อเจ้าหน้าที่ผู้จัดงานได้ตามช่องทางที่กำหนด
+          <div class="search-row">
+            <div class="field">
+              <label for="search_name">ค้นหาชื่อ–นามสกุล VIP</label>
+              <input id="search_name" type="text" placeholder="พิมพ์อย่างน้อย 2 ตัวอักษร แล้วกดค้นหา">
+            </div>
+            <button id="btn-search" class="btn-primary" type="button">ค้นหา</button>
+          </div>
+
+          <div id="search-results" class="results" style="display:none;"></div>
+
+          <div id="staff-selected-container"></div>
+          <div id="staff-status-container"></div>
+        </div>
+      </div>
+
+      <!-- STATE 2: GUEST VIEW -->
+      <div id="view-guest" style="display:none;">
+        <div class="section">
+          <div class="section-title">ส่วนที่ 2 • ผู้รับ VIP</div>
+          <div class="section-caption">
+            กรุณาตรวจสอบข้อมูลด้านล่าง และกดยืนยันการยินยอมและการรับสิทธิ
+          </div>
+
+          <div id="guest-info"></div>
+
+          <div class="consent-box">
+            <div class="consent-item">
+              <input type="checkbox" id="guest-consent">
+              <label for="guest-consent">
+                ฉันยินยอมให้ผู้จัดงานเก็บและใช้ข้อมูลส่วนบุคคลของฉัน
+                เพื่อการจัดงาน การรักษาความปลอดภัย และการติดต่อสื่อสารที่เกี่ยวข้องกับงานนี้
+              </label>
+            </div>
+
+            <p class="consent-note">
+              โดยการติ๊กถูกและกดปุ่ม <strong>“กดรับสิทธิ”</strong> ฉันยืนยันว่า:
+              <br>• ข้อมูลที่ให้ไว้เป็นข้อมูลที่ถูกต้องตามความเป็นจริง
+              <br>• ยินยอมให้บันทึกเวลาการรับสิทธิ VIP ไว้ในระบบของผู้จัดงาน
+              <br>• เข้าใจว่าการรับสิทธิ VIP ครั้งนี้ใช้ได้สำหรับการออกบัตร / สายข้อมือ ตามจำนวนที่ระบุเท่านั้น
+              <br><br>
+              ข้อมูลของฉันอาจถูกใช้เพื่อ:
+              <br>• การจัดทำสถิติจำนวนผู้เข้าร่วมงานและการรายงานผลการจัดงาน
+              <br>• การสื่อสารข้อมูลสำคัญเกี่ยวกับงานนี้ หรือกิจกรรมที่เกี่ยวข้องโดยตรง
+              <br>• การรักษาความปลอดภัย การตรวจสอบตัวตน และการป้องกันการใช้สิทธิ์โดยมิชอบ
+              <br><br>
+              ผู้จัดงานจะเก็บรักษาข้อมูลไว้ในระยะเวลาที่เหมาะสมกับวัตถุประสงค์ของการจัดงาน
+              และจะไม่เปิดเผยข้อมูลแก่บุคคลภายนอก นอกจากหน่วยงานหรือคู่ค้าที่เกี่ยวข้องกับงานนี้โดยชอบ
+              <br>หากต้องการขอแก้ไข หรือลบข้อมูล สามารถติดต่อเจ้าหน้าที่ผู้จัดงานได้ตามช่องทางที่กำหนด
+            </p>
+          </div>
+
+          <div id="guest-status-container"></div>
+
+          <div style="margin-top:14px; display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;">
+            <button type="button" class="btn-ghost" id="btn-back-to-staff">
+              กลับให้เจ้าหน้าที่ค้นหาใหม่
+            </button>
+            <button type="button" class="btn-primary" id="btn-accept">
+              <span id="btn-accept-text">กดรับสิทธิ VIP</span>
+              <span id="btn-accept-loading" style="display:none;">กำลังบันทึก...</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STATE 3: FINAL VIEW -->
+      <div id="view-final" style="display:none;">
+        <div class="section center">
+          <div class="section-title">Ticket Processed</div>
+          <p class="section-caption">
+            ระบบได้บันทึกการรับสิทธิของคุณเรียบร้อยแล้ว<br>
+            กรุณาส่งต่ออุปกรณ์ให้เจ้าหน้าที่ เพื่อดำเนินการออกตั๋ว
           </p>
-        </div>
 
-        <div id="guest-status-container"></div>
-
-        <div style="margin-top:14px; display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;">
-          <button type="button" class="btn-ghost" id="btn-back-to-staff">
-            กลับให้เจ้าหน้าที่ค้นหาใหม่
-          </button>
-          <button type="button" class="btn-primary" id="btn-accept">
-            <span id="btn-accept-text">กดรับสิทธิ VIP</span>
-            <span id="btn-accept-loading" style="display:none;">กำลังบันทึก...</span>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- STATE 3: FINAL VIEW -->
-    <div id="view-final" style="display:none;">
-      <div class="section center">
-        <div class="section-title">Ticket Processed</div>
-        <p class="section-caption">
-          ระบบได้บันทึกการรับสิทธิของคุณเรียบร้อยแล้ว<br>
-          กรุณาส่งต่ออุปกรณ์ให้เจ้าหน้าที่ เพื่อดำเนินการออกตั๋ว
-        </p>
-
-        <div class="status status-success" style="justify-content:center;">
-          <div class="status-icon"></div>
-          <div>
-            <div class="status-text-strong">สำเร็จ • VIP Ticket Processed</div>
-            <div>เจ้าหน้าที่สามารถดำเนินการออกตั๋ว / สายข้อมือ ให้กับผู้รับสิทธิได้ทันที</div>
+          <div class="status status-success" style="justify-content:center;">
+            <div class="status-icon"></div>
+            <div>
+              <div class="status-text-strong">สำเร็จ • VIP Ticket Processed</div>
+              <div>เจ้าหน้าที่สามารถดำเนินการออกตั๋ว / สายข้อมือ ให้กับผู้รับสิทธิได้ทันที</div>
+            </div>
           </div>
-        </div>
 
-        <div style="margin-top:18px;">
-          <button type="button" class="btn-primary" id="btn-back-home">
-            กลับไปหน้าแรก (ค้นหา VIP ใหม่)
-          </button>
+          <div style="margin-top:18px;">
+            <button type="button" class="btn-primary" id="btn-back-home">
+              กลับไปหน้าแรก (ค้นหา VIP ใหม่)
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
 <script>
   const SUPABASE_URL = "https://mhecpnqwwxspxfhdvzsc.supabase.co";
