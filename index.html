@@ -352,24 +352,7 @@
       line-height:1.5;
     }
 
-    .status {
-      margin-top:12px;
-      font-size:var(--font-note);
-      display:flex;
-      align-items:flex-start;
-      gap:8px;
-    }
-
-    .status-icon {
-      width:18px;
-      height:18px;
-      border-radius:999px;
-      flex-shrink:0;
-    }
-
-    .status-success .status-icon {
-      background:var(--ok);
-    }
+    
 
     .status-error .status-icon {
       background:#dc2626;
@@ -382,6 +365,68 @@
 
     .center {
       text-align:center;
+      /* FINAL VIEW THEME (ORANGE PREMIUM) */
+
+.final-box {
+  background: #fff7ef;
+  border: 2px solid #f7a464;
+  padding: 26px 20px;
+  border-radius: 18px;
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(243, 112, 33, 0.18);
+}
+
+.final-title {
+  font-size: clamp(26px, 3vw, 34px);
+  font-weight: 900;
+  color: #f37021;
+  margin-bottom: 6px;
+}
+
+.final-caption {
+  color: #6b7280;
+  font-size: clamp(17px, 2.2vw, 20px);
+  margin-bottom: 14px;
+}
+
+.success-icon {
+  width: 70px;
+  height: 70px;
+  background: #f37021;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 12px auto;
+  font-size: 40px;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(243, 112, 33, 0.4);
+}
+
+.success-text-strong {
+  font-size: 20px;
+  color: #d35400;
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+.final-btn {
+  background: linear-gradient(90deg, #f37021, #ff944d);
+  color: #fff;
+  border-radius: 999px;
+  padding: 12px 28px;
+  font-size: 20px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  margin-top: 20px;
+  box-shadow: 0 4px 12px rgba(243, 112, 33, 0.35);
+}
+
+.final-btn:hover {
+  opacity: .92;
+}
     }
   </style>
 </head>
